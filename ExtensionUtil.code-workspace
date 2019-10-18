@@ -1,0 +1,21 @@
+{
+	"folders": [
+		{
+			"path": "."
+		}
+	],
+	"settings": {
+		"workbench.colorCustomizations": {
+			"titleBar.activeBackground": "#528708",
+			"titleBar.inactiveBackground": "#52870899",
+			"titleBar.activeForeground": "#e7e7e7",
+			"titleBar.inactiveForeground": "#e7e7e799"
+		},
+		"peacock.color": "#528708",
+		"files.exclude": {
+			"dist/**": true,
+			"out/**": true,
+			"node_modules/**": true
+		}
+	}
+}

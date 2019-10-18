@@ -1,0 +1,47 @@
+{
+	"name": "vscode-extension-util",
+	"description": "Utility library for Visual Studio Code Extensions.",
+	"author": {
+		"name": "Matthias Füg",
+		"email": "matthias.fueg@dampsoft.de"
+	},
+	"version": "0.0.0",
+	"license": "MIT",
+	"homepage": "https://github.com/mfueg/vscode-extension-util",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/mfueg/vscode-extension-util.git"
+	},
+	"bugs": {
+		"url": "https://github.com/mfueg/vscode-extension-util/issues",
+		"email": "matthias.fueg@dampsoft.de"
+	},
+	"main": "dist/index.js",
+	"typings": "dist/index.d.ts",
+	"keywords": [
+		"visual studio code",
+		"typescript",
+		"utility"
+	],
+	"scripts": {
+		"test": "mocha --reporter spec",
+		"build": "tsc --pretty",
+		"prepublishOnly": "npm run build",
+		"watch": "npm run build -- --watch --diagnostics"
+	},
+	"dependencies": {
+		"chokidar": "^3.2.2",
+		"fs-extra": "^8.1.0",
+		"tslib": "^1.10.0",
+		"uuid": "^3.3.3",
+		"vscode-nls": "^4.1.1"
+	},
+	"devDependencies": {
+		"@types/fs-extra": "^8.0.1",
+		"@types/node": "^12.11.1",
+		"typescript": "^3.6.4",
+		"vsce": ">=1.68.0",
+		"vscode": "^1.1.36",
+		"vscode-nls-dev": "^3.3.1"
+	}
+}
