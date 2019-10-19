@@ -20,4 +20,4 @@ Feel free to contribute...
 
 ## License
 
-[MIT](https://github.com/mfueg/crucible-connector/blob/master/LICENSE)
+[MIT](https://github.com/mfueg/vscode-extension-util/blob/master/LICENSE)
