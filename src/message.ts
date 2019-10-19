@@ -1,6 +1,6 @@
 import * as vscode from 'vscode';
 
-import { Logger } from './logger';
+import { log, LoggerI, SelectiveLogger } from './logger';
 
 type MessageType = 'debug' | 'info' | 'error' | 'warning';
 const MessageTypeDebug: MessageType = 'debug';
@@ -9,6 +9,8 @@ const MessageTypeError: MessageType = 'error';
 const MessageTypeWarning: MessageType = 'warning';
 
 export class Message {
+  public static defaultLogger: LoggerI = SelectiveLogger.instance;
+
   constructor(
     public readonly title: string,
     public readonly description: string,
@@ -36,12 +38,12 @@ export class Message {
     return `${this.title}: \n${this.description}`;
   }
 
-  public log() {
-    Message.log(this);
+  public log(logger?: LoggerI) {
+    Message.log(this, logger);
   }
 
-  public notify(forceLog?: boolean) {
-    Message.notify(this, forceLog);
+  public notify(logger?: LoggerI, forceLog?: boolean) {
+    Message.notify(this, logger, forceLog);
   }
 
   static debug(title: string, description: string, details?: string) {
@@ -73,7 +75,7 @@ export class Message {
     return Message.error(title, description, details);
   }
 
-  static notify(message: Message, forceLog: boolean = false) {
+  static notify(message: Message, logger?: LoggerI, forceLog: boolean = false) {
     if (message.isError()) {
       vscode.window.showErrorMessage(message.format());
     } else if (message.isWarning()) {
@@ -84,28 +86,14 @@ export class Message {
       forceLog = true;
     }
 
-    if (forceLog) Message.log(message);
+    if (forceLog) Message.log(message, logger);
   }
 
-  static log(message: Message) {
+  static log(message: Message, logger?: LoggerI) {
     let msg = `${message.title}: ${message.description}`;
     if (message.details) {
       msg += `\n${message.details}`;
     }
-    Logger.instance.log(msg, message.type);
-  }
-}
-
-export type NotifyMessageHandler = (e: Message, forceLog: boolean) => void;
-
-export class CanNotifyMessages {
-  constructor(protected notificationHandler?: NotifyMessageHandler) {}
-
-  protected notify(message: Message, forceLog: boolean = false) {
-    if (this.notificationHandler) {
-      this.notificationHandler(message, forceLog);
-    } else {
-      Message.notify(message, forceLog);
-    }
+    log(msg, logger || Message.defaultLogger, message.type);
   }
 }

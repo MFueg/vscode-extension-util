@@ -1,6 +1,5 @@
 import { DisposableI } from '../disposable';
-
-const uuid = require('uuid/v4');
+import uuid = require('uuid/v4');
 
 export type EventHandler<T> = (value: T) => void;
 

@@ -1,15 +1,13 @@
 import { homedir } from 'os';
 import * as vscode from 'vscode';
-const uuid = require('uuid/v4');
+import uuid = require('uuid/v4');
 
 type CallableRegexSymbolResolver = (p: RegExpMatchArray) => string | undefined;
 type CallableSymbolResolver = () => string | undefined;
 type Symbol = RegExp;
-type SymbolMap =
-  [Symbol, string | CallableRegexSymbolResolver | CallableSymbolResolver][];
+type SymbolMap = [Symbol, string | CallableRegexSymbolResolver | CallableSymbolResolver][];
 
-export interface SymbolValueProvider { }
-
+export interface SymbolValueProvider {}
 
 /**
  * Interface für einen SymbolResolver
@@ -62,7 +60,6 @@ export class SymbolResolver {
   }
 }
 
-
 /**
  * Basis-Klasse für Klassen zur Symbolauflösungen
  */
@@ -96,16 +93,14 @@ export abstract class BaseSymbolResolver implements SymbolResolverI {
         if (typeof this.symbols[i][1] === 'string') {
           replacement = this.symbols[i][1] as string;
         } else {
-          let regexResolver =
-            (this.symbols[i][1] as CallableRegexSymbolResolver);
+          let regexResolver = this.symbols[i][1] as CallableRegexSymbolResolver;
           if (regexResolver) {
             replacement = regexResolver(match);
           } else {
             replacement = (this.symbols[i][1] as CallableSymbolResolver)();
           }
         }
-        replaced +=
-          value.substring(lastAppend, match.index) + (replacement || '');
+        replaced += value.substring(lastAppend, match.index) + (replacement || '');
         lastAppend = this.symbols[i][0].lastIndex;
       }
       replaced += value.substring(lastAppend);
@@ -114,9 +109,7 @@ export abstract class BaseSymbolResolver implements SymbolResolverI {
     return value;
   }
 
-  protected registerSymbol(
-    symbol: Symbol,
-    resolver: string | CallableRegexSymbolResolver | CallableSymbolResolver) {
+  protected registerSymbol(symbol: Symbol, resolver: string | CallableRegexSymbolResolver | CallableSymbolResolver) {
     this.symbols.push([symbol, resolver]);
   }
 }
@@ -128,10 +121,8 @@ export abstract class BaseSymbolResolver implements SymbolResolverI {
 export class WorkspaceSymbolResolver extends BaseSymbolResolver {
   constructor(private readonly workspaceFolder: vscode.WorkspaceFolder) {
     super();
-    this.registerSymbol(
-      /\${workspaceDirectory}/g, this.workspaceFolder.uri.fsPath);
-    this.registerSymbol(
-      /\${workspaceFolder}/g, this.workspaceFolder.uri.fsPath);
+    this.registerSymbol(/\${workspaceDirectory}/g, this.workspaceFolder.uri.fsPath);
+    this.registerSymbol(/\${workspaceFolder}/g, this.workspaceFolder.uri.fsPath);
     this.registerSymbol(/\${UserDir}/g, homedir());
     this.registerSymbol(/\${HomeDir}/g, homedir());
     this.registerSymbol(/~(?=$|\/|\\)/g, homedir());

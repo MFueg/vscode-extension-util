@@ -18,11 +18,7 @@
 	},
 	"main": "dist/index.js",
 	"typings": "dist/index.d.ts",
-	"keywords": [
-		"visual studio code",
-		"typescript",
-		"utility"
-	],
+	"keywords": [ "visual studio code", "typescript", "utility" ],
 	"scripts": {
 		"test": "mocha --reporter spec",
 		"build": "tsc --pretty",
@@ -39,9 +35,10 @@
 	"devDependencies": {
 		"@types/fs-extra": "^8.0.1",
 		"@types/node": "^12.11.1",
+		"@types/uuid": "^3.4.5",
+		"@types/vscode": "^1.39.0",
 		"typescript": "^3.6.4",
-		"vsce": ">=1.68.0",
-		"vscode": "^1.1.36",
+		"vsce": "^1.68.0",
 		"vscode-nls-dev": "^3.3.1"
 	}
 }
